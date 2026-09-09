@@ -23,8 +23,6 @@ public class DataSeeder implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        // TODO(human): seed a handful of real jamo (via jamoRepository) and at
-        // least one SoundChangeRule connecting them (via soundChangeRuleRepository).
         if (jamoRepository.count() > 0) {
             return;
         }
