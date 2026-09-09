@@ -30,6 +30,7 @@ public class Jamo {
 
     // Jamo audio
     private String choseongAudioUrl;
+    private String jungseongAudioUrl;
     private String jongseongAudioUrl;
 
     public Long getId() {
@@ -78,6 +79,10 @@ public class Jamo {
 
     public String getChoseongAudioUrl() {
         return choseongAudioUrl;
+    }
+
+    public String getJungseongAudioUrl() {
+        return jungseongAudioUrl;
     }
 
     public String getJongseongAudioUrl() {
@@ -130,6 +135,10 @@ public class Jamo {
 
     public void setChoseongAudioUrl(String choseongAudioUrl) {
         this.choseongAudioUrl = choseongAudioUrl;
+    }
+
+    public void setJungseongAudioUrl(String jungseongAudioUrl) {
+        this.jungseongAudioUrl = jungseongAudioUrl;
     }
 
     public void setJongseongAudioUrl(String jongseongAudioUrl) {
