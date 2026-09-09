@@ -57,11 +57,11 @@ public class Jamo {
         return manner;
     }
 
-    public boolean canBeChoseong() {
+    public boolean isCanBeChoseong() {
         return canBeChoseong;
     }
 
-    public boolean canBeJungseong() {
+    public boolean isCanBeJungseong() {
         return canBeJungseong;
     }
 
