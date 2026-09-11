@@ -173,6 +173,8 @@ public class DataSeeder implements CommandLineRunner {
                 siot, ssangsiot, ieung, jieut, ssangjieut, chieut, kieuk, tieut, pieup, hieut, a, ae, ya, yae, eo, e,
                 yeo, ye, o, wa, wae, oe, yo, u, wo, we, wi, yu, eu, ui, i));
 
+
+
         // Add data for sound change rules
         SoundChangeRule nasalisation = new SoundChangeRule();
         nasalisation.setTriggerJamo(giyeok);

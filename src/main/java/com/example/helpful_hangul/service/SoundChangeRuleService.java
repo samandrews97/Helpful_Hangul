@@ -33,4 +33,9 @@ public class SoundChangeRuleService {
         Jamo followingJamo = jamoService.getJamoById(followingJamoId);
         return soundChangeRuleRepository.findByTriggerJamoAndFollowingJamo(triggerJamo, followingJamo);
     }
+
+    public List<SoundChangeRule> findByTriggerJamo(Long triggerJamoId) {
+        Jamo triggerJamo = jamoService.getJamoById(triggerJamoId);
+        return soundChangeRuleRepository.findByTriggerJamo(triggerJamo);
+    }
 }
