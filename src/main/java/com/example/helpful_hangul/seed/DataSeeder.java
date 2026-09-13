@@ -176,13 +176,59 @@ public class DataSeeder implements CommandLineRunner {
 
 
         // Add data for sound change rules
-        SoundChangeRule nasalisation = new SoundChangeRule();
-        nasalisation.setTriggerJamo(giyeok);
-        nasalisation.setFollowingJamo(nieun);
-        nasalisation.setResultingJamo(ieung);
-        nasalisation.setSoundChangeType(SoundChangeRule.SoundChangeType.NASALISATION);
 
-        soundChangeRuleRepository.save(nasalisation);
+        // Giyeok
+        SoundChangeRule giyeokNasalisation = new SoundChangeRule();
+        giyeokNasalisation.setTriggerJamo(giyeok);
+        giyeokNasalisation.setFollowingJamo(nieun);
+        giyeokNasalisation.setResultingJamo(ieung);
+        giyeokNasalisation.setSoundChangeType(SoundChangeRule.SoundChangeType.NASALISATION);
+
+        SoundChangeRule giyeokLiaison = new SoundChangeRule();
+        giyeokLiaison.setTriggerJamo(giyeok);
+        giyeokLiaison.setFollowingJamo(ieung);
+        giyeokLiaison.setResultingJamo(giyeok);
+        giyeokLiaison.setSoundChangeType(SoundChangeRule.SoundChangeType.LIAISON);
+
+        SoundChangeRule giyeokGiyeokTensing = new SoundChangeRule();
+        giyeokGiyeokTensing.setTriggerJamo(giyeok);
+        giyeokGiyeokTensing.setFollowingJamo(giyeok);
+        giyeokGiyeokTensing.setResultingJamo(ssanggiyeok);
+        giyeokGiyeokTensing.setSoundChangeType(SoundChangeRule.SoundChangeType.TENSING);
+
+        SoundChangeRule giyeokDiguetTensing = new SoundChangeRule();
+        giyeokDiguetTensing.setTriggerJamo(giyeok);
+        giyeokDiguetTensing.setFollowingJamo(digeut);
+        giyeokDiguetTensing.setResultingJamo(ssangdigeut);
+        giyeokDiguetTensing.setSoundChangeType(SoundChangeRule.SoundChangeType.TENSING);
+
+        SoundChangeRule giyeokBieupTensing = new SoundChangeRule();
+        giyeokBieupTensing.setTriggerJamo(giyeok);
+        giyeokBieupTensing.setFollowingJamo(bieup);
+        giyeokBieupTensing.setResultingJamo(ssangbieup);
+        giyeokBieupTensing.setSoundChangeType(SoundChangeRule.SoundChangeType.TENSING);
+
+        SoundChangeRule giyeokSiotTensing = new SoundChangeRule();
+        giyeokSiotTensing.setTriggerJamo(giyeok);
+        giyeokSiotTensing.setFollowingJamo(siot);
+        giyeokSiotTensing.setResultingJamo(ssangsiot);
+        giyeokSiotTensing.setSoundChangeType(SoundChangeRule.SoundChangeType.TENSING);
+
+        SoundChangeRule giyeokJieutTensing = new SoundChangeRule();
+        giyeokJieutTensing.setTriggerJamo(giyeok);
+        giyeokJieutTensing.setFollowingJamo(jieut);
+        giyeokJieutTensing.setResultingJamo(ssangjieut);
+        giyeokJieutTensing.setSoundChangeType(SoundChangeRule.SoundChangeType.TENSING);
+
+        SoundChangeRule giyeokAspiration = new SoundChangeRule();
+        giyeokAspiration.setTriggerJamo(giyeok);
+        giyeokAspiration.setFollowingJamo(hieut);
+        giyeokAspiration.setResultingJamo(kieuk);
+        giyeokAspiration.setSoundChangeType(SoundChangeRule.SoundChangeType.ASPIRATION);
+
+
+        soundChangeRuleRepository.saveAll(List.of(giyeokNasalisation, giyeokLiaison, giyeokGiyeokTensing,
+                giyeokDiguetTensing, giyeokBieupTensing, giyeokSiotTensing, giyeokJieutTensing, giyeokAspiration));
 
     }
 
