@@ -7,6 +7,7 @@ A REST API for Korean pronunciation: the 40 basic jamo (the letters of Hangul) a
 Korean is not always pronounced as it is written. 학년 is spelled *hak-nyeon* but pronounced *hang-nyeon*, because a final ㄱ followed by ㄴ becomes ㅇ. This API models those rules as data, so a client can ask "what happens when ㄱ is followed by ㄴ?" and get a structured answer.
 
 **Live demo:** https://d1aq0uzqqm175a.cloudfront.net
+
 **Frontend repo:** [Helpful_Hangul_Web](https://github.com/samandrews97/Helpful_Hangul_Web) (React)
 
 ## Why I built this
@@ -17,7 +18,7 @@ With longer words, I'd read them as written, hear them said completely different
 
 ## Tech stack
 
-- Java 17, Spring Boot 4 (Web MVC, Data JPA, Validation)
+- Java 17, Spring Boot 4 (Web MVC, Data JPA)
 - PostgreSQL
 - JUnit 5, Mockito, MockMvc
 - Maven
@@ -73,6 +74,24 @@ Jamo objects are shortened here. The full response also includes the jamo type, 
 - **Layered structure.** Controllers handle HTTP, services hold the logic, repositories handle persistence. Each layer is tested separately: services with Mockito, controllers with `@WebMvcTest` and MockMvc.
 - **Seed data reflects real orthography.** For example ㄸ, ㅃ and ㅉ cannot be final consonants, while ㄲ and ㅆ can.
 
+## Problems I hit
+
+### The site loaded but showed no data
+
+After the first deployment, the site loaded but showed no data. Every test I ran with `curl` against the API passed, which made it confusing.
+
+The cause was mixed content. The frontend was served over HTTPS from CloudFront, but it called the API over plain HTTP on the EC2 instance. Browsers block that silently, and `curl` does not, so my checks could not see the failure.
+
+I fixed it by adding the EC2 instance as a second CloudFront origin and routing `/api/*` to it. The browser now reaches the frontend and the API on one HTTPS origin, which also removed the need for cross-origin requests.
+
+### The app crash-looped on the server
+
+On the EC2 instance the app kept restarting with `relation "jamo" does not exist`. The error came from `DataSeeder`, so it looked like a problem with the seed data, but the tables had never been created.
+
+The cause was a change in PostgreSQL 15. A role that is not the owner can no longer create tables in the `public` schema by default. I had granted the application's role all privileges on the database, but that does not include creating tables in a schema, so Hibernate could not build the schema and the seeder then failed on the missing table.
+
+I fixed it by granting the role access to the schema itself with `GRANT ALL ON SCHEMA public`. It did not happen on my own machine because my local role owns the database.
+
 ## Running locally
 
 Requirements: Java 17 or later, and PostgreSQL.
@@ -109,8 +128,12 @@ The instance's security group only accepts API traffic from CloudFront, so the A
 
 ## Status and roadmap
 
-All 40 basic jamo are seeded. Sound change rules are currently seeded for ㄱ only.
+This is an early version (0.1). All 40 basic jamo are seeded. Sound change rules are currently seeded for ㄱ only.
 
 - [ ] Rules for the remaining final consonants
 - [ ] Audio clips for each jamo
 - [ ] Versioned schema migrations with Flyway, replacing `ddl-auto=update`
+
+## How this was built
+
+I built this project with Claude Code as a pair programmer, and the commit history reflects that. I designed the data model and the API, and wrote the core logic myself: the entities, the services and the rule resolution. AI assistance covered scaffolding, test setup, debugging, the deployment scripting and documentation. I reviewed every change, and I can explain every design decision in this repo.
