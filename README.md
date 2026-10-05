@@ -74,7 +74,7 @@ Jamo objects are shortened here. The full response also includes the jamo type, 
 - **Layered structure.** Controllers handle HTTP, services hold the logic, repositories handle persistence. Each layer is tested separately: services with Mockito, controllers with `@WebMvcTest` and MockMvc.
 - **Seed data reflects real orthography.** For example ㄸ, ㅃ and ㅉ cannot be final consonants, while ㄲ and ㅆ can.
 
-## Problems I hit
+## Problems I solved
 
 ### The site loaded but showed no data
 
